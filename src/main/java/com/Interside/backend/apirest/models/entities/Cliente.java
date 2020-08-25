@@ -1,13 +1,21 @@
 package com.Interside.backend.apirest.models.entities;
 
 import java.io.Serializable;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name = "clientes")
@@ -25,8 +33,10 @@ public class Cliente implements Serializable{
 	@Column(name = "Apellido", length = 200)
 	private String apellido;
 	
-	@Column(name = "Cuenta", length = 200)
-	private String cuenta;
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@JoinColumn(name = "cliente_id")
+	@JsonManagedReference
+	private List<Cuenta> cuentas;
 	
 	public Cliente () {
 		
@@ -56,12 +66,13 @@ public class Cliente implements Serializable{
 		this.apellido = apellido;
 	}
 
-	public String getCuenta() {
-		return cuenta;
+	public List<Cuenta> getCuentas() {
+		return cuentas;
 	}
 
-	public void setCuenta(String cuenta) {
-		this.cuenta = cuenta;
+	public void setCuentas(List<Cuenta> cuentas) {
+		this.cuentas = cuentas;
 	}
-	
+
+
 }

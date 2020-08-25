@@ -14,44 +14,44 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.Interside.backend.apirest.models.dao.IClienteDao;
-import com.Interside.backend.apirest.models.entities.Cliente;
+import com.Interside.backend.apirest.models.dao.ICuentaDao;
+import com.Interside.backend.apirest.models.entities.Cuenta;
 
 @RestController
-@RequestMapping("/cliente")
-public class ClienteController {
+@RequestMapping("/cliente/{idCliente}/cuenta")
+public class CuentaController {
 	
 	@Autowired
-	private IClienteDao clientedao;
+	private ICuentaDao Cuentadao;
 	
 	@GetMapping({"","/"})
-	public List<Cliente> listar() {
-		List<Cliente> clientes = clientedao.findAll();
-		return clientes;
+	public List<Cuenta> listar() {
+		List<Cuenta> Cuentas = Cuentadao.findAll();
+		return Cuentas;
 	}
 	
 	@GetMapping("/{id}")
-	public Cliente mostrar(@PathVariable Integer id) {
-		return clientedao.findById(id);
+	public Cuenta mostrar(@PathVariable Integer idCliente, @PathVariable Integer id) {
+		return Cuentadao.findById(id);
 	}
 	
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	public String crear(@RequestBody Cliente cliente) {
-		clientedao.save(cliente);
+	public String crear(@PathVariable Integer idCliente,@RequestBody Cuenta Cuenta) {
+		Cuentadao.save(Cuenta);
 		return "todo ok";
 	}
 	
 	@PutMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	public String actualizar(@RequestBody Cliente cliente) {
-		clientedao.save(cliente);
+	public String actualizar(@PathVariable Integer idCliente,@RequestBody Cuenta Cuenta) {
+		Cuentadao.save(Cuenta);
 		return "todo ok";
 	}
 	
 	@DeleteMapping("/{id}")
-	public String eliminar(@PathVariable Integer id) {
-		clientedao.delete(id);
+	public String eliminar(@PathVariable Integer idCliente,@PathVariable Integer id) {
+		Cuentadao.delete(id);
 		return "todo ok";
 	}
 }
